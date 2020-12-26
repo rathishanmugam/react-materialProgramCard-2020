@@ -1,0 +1,37 @@
+version: '3.7'
+services:
+  react:
+    build: client
+#    image: react:latest
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./client:/app
+    depends_on:
+      - express
+    networks:
+        - app-network
+  express:
+    build: server
+#    image: express:latest
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./server:/usr/src/app
+    depends_on:
+      - database
+    networks:
+        - app-network
+  database:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - /var/lib/docker/volumes/carddata/_data:/data/db
+    networks:
+      - app-network
+networks:
+  app-network:
+    driver: bridge
+
+

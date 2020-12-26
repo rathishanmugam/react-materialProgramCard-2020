@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: card-mongodb
+  labels:
+    app: card-mongodb
+spec:
+  volumes:
+    - name: card-mongo-vol
+      persistentVolumeClaim:
+        claimName: card-pvc
+  containers:
+    - image: mongo
+      name: container1
+      command:
+        - mongod
+        - "--bind_ip"
+        - "0.0.0.0"
+      ports:
+        - containerPort: 27017
+      volumeMounts:
+        - name: card-mongo-vol
+          mountPath: /data/db

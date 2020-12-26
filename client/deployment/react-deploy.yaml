@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client
+#  namespace: dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: client
+  template:
+    metadata:
+      labels:
+        app: client
+    spec:
+      containers:
+        - image: docker.io/rathidockerrepo/card-react-image:latest
+          name: client
+          imagePullPolicy: Always
+          env:
+            - name: API_KEY
+              value: 'http://192.168.99.103:30833'
+          ports:
+            - containerPort: 3000

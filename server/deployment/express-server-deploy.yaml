@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: card-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: card-server
+  template:
+    metadata:
+      labels:
+        app: card-server
+    spec:
+      containers:
+        - image: docker.io/rathidockerrepo/card-node-image:latest
+          name: card-server
+          ports:
+            - containerPort: 5000
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: card-server
